@@ -281,31 +281,85 @@ Plotly.newPlot('c6',[{type:'bar',x:D.vix_dates,y:D.anomaly_vals,name:'VIX>25 交
   }), cfg);
 })();
 
-// c9 情境箱型圖 — y 軸自動縮放
+// c9 情境報酬分布 — 水平範圍圖（每情境一列，清楚顯示中位數與IQR）
 (function(){
-  const traces=D.scenario_labels.map((s,i)=>{
-    const st=D.scenario_stats[i];
-    return{type:'box',name:s,
-      median:[st.median],q1:[st.q1],q3:[st.q3],
-      lowerfence:[st.lo],upperfence:[st.hi],
-      marker:{color:D.scenario_colors[i]},
-      line:{color:D.scenario_colors[i]},
-      boxmean:false};
+  const labels = D.scenario_labels.map(s => s.replace('（低波動）','').replace('（高波動）',''));
+  const cols   = D.scenario_colors;
+  const stats  = D.scenario_stats;
+
+  // 每個情境畫三層：極端範圍（lo~hi）、IQR（q1~q3）、中位數點
+  const traces = [];
+
+  // 層一：極端範圍（細線，低透明度）
+  stats.forEach((st, i) => {
+    traces.push({
+      type: 'scatter', mode: 'lines',
+      x: [st.lo, st.hi], y: [labels[i], labels[i]],
+      line: { color: cols[i], width: 2 },
+      opacity: 0.35,
+      showlegend: false,
+      hoverinfo: 'skip',
+    });
   });
-  // 計算合理 y 軸範圍
-  const allLo = Math.min(...D.scenario_stats.map(s=>s.lo));
-  const allHi = Math.max(...D.scenario_stats.map(s=>s.hi));
-  const pad = (allHi - allLo) * 0.15;
-  Plotly.newPlot('c9',traces,L({
-    yaxis:{
-      title:{text:'台股年化報酬率 %',font:{size:9}},
-      zeroline:true,zerolinecolor:'#64748B',
-      range:[allLo - pad, allHi + pad],
-      autorange:false,
+
+  // 層二：IQR 範圍（粗線，主色）
+  stats.forEach((st, i) => {
+    traces.push({
+      type: 'scatter', mode: 'lines',
+      x: [st.q1, st.q3], y: [labels[i], labels[i]],
+      line: { color: cols[i], width: 14 },
+      opacity: 0.75,
+      showlegend: false,
+      name: labels[i],
+      hovertemplate: labels[i] + '<br>IQR: %{x:.1f}%<extra></extra>',
+    });
+  });
+
+  // 層三：中位數（白色菱形點）
+  traces.push({
+    type: 'scatter', mode: 'markers',
+    x: stats.map(st => st.median),
+    y: labels,
+    marker: { color: '#FFFFFF', size: 10, symbol: 'diamond', line: { color: '#1E2D45', width: 1.5 } },
+    showlegend: false,
+    hovertemplate: '中位數: %{x:.1f}%<extra></extra>',
+  });
+
+  // 零線
+  traces.push({
+    type: 'scatter', mode: 'lines',
+    x: [0, 0],
+    y: [labels[0], labels[labels.length - 1]],
+    line: { color: 'rgba(148,163,184,0.4)', width: 1, dash: 'dot' },
+    showlegend: false, hoverinfo: 'skip',
+  });
+
+  const allVals = stats.flatMap(st => [st.lo, st.hi]);
+  const pad = (Math.max(...allVals) - Math.min(...allVals)) * 0.1;
+
+  Plotly.newPlot('c9', traces, L({
+    xaxis: {
+      title: { text: '台股年化報酬率 %', font: { size: 9 } },
+      zeroline: false,
+      range: [Math.min(...allVals) - pad, Math.max(...allVals) + pad],
     },
-    showlegend:false,
-    margin:{t:8,b:32,l:52,r:12}
-  }),cfg);
+    yaxis: {
+      autorange: 'reversed',
+      tickfont: { size: 10, color: '#94A3B8' },
+      gridcolor: 'rgba(0,0,0,0)',
+    },
+    margin: { t: 8, b: 40, l: 80, r: 40 },
+    showlegend: false,
+    annotations: stats.map((st, i) => ({
+      x: st.median, y: labels[i],
+      text: st.median.toFixed(1) + '%',
+      showarrow: false,
+      font: { size: 9, color: '#E2E8F0' },
+      xanchor: st.median >= 0 ? 'left' : 'right',
+      xshift: st.median >= 0 ? 8 : -8,
+      yshift: 0,
+    })),
+  }), cfg);
 })();
 
 // c10 Fan Chart
