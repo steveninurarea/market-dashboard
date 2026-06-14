@@ -287,11 +287,7 @@
   <div style="flex:1;height:1px;background:var(--border)"></div>
 </div>
 <div class="gf"><div class="card"><div class="ct">台股 × 美股 × Fed 利率 跨市場走勢（基期100） <span class="badge">真實資料 2020–2024</span></div><div id="c7" style="height:320px"></div></div></div>
-<div class="g2">
-  <div class="card"><div class="ct">台美 60日滾動相關係數 <span class="badge">真實資料·風險前兆偵測</span></div><div id="c8" style="height:230px"></div></div>
-  <div class="card"><div class="ct">五情境報酬分布（依VIX分群） <span class="badge">真實資料</span></div><div id="c9" style="height:230px"></div></div>
-</div>
-<div class="ins"><strong>核心洞察：</strong>台股 2020–2024 累計報酬 <strong>+91.6%</strong>，美股 SPX 同期 <strong>+81.3%</strong>。台美 60 日滾動相關係數最新為 <strong>-0.034</strong>——台美相關係數在 2024 年初觸及五年高點 0.49，顯示系統性風險上升時跨市場分散效果會明顯下降。</div>
+<div class="ins"><strong>歷史走勢：</strong>台股 2020–2024 累計報酬 <strong>+91.6%</strong>，美股 SPX 同期 <strong>+81.3%</strong>。台股在 2021 年領漲後受 Fed 升息週期壓制，2023–2024 年 AI 題材帶動兩市場同步回升。</div>
 
 <!-- 04-B 前瞻 -->
 <div style="display:flex;align-items:center;gap:10px;margin:24px 0 12px">
@@ -301,12 +297,10 @@
 </div>
 
 <!-- 現況 KPI -->
-<div class="kr" style="margin-bottom:14px">
+<div class="kr" style="margin-bottom:14px;grid-template-columns:repeat(3,1fr)">
   <div class="kc"><div class="kl">台股（2024Q4）</div><div class="kv">23,190</div><div class="ks" style="color:var(--green)">分岔點基準</div></div>
   <div class="kc g"><div class="kl">Fed 利率</div><div class="kv">4.5%</div><div class="ks" style="color:var(--red)">↓ 降息循環中</div></div>
-  <div class="kc gr"><div class="kl">VIX</div><div class="kv">17.4</div><div class="ks">市場情緒平穩</div></div>
-  <div class="kc p"><div class="kl">台美相關性</div><div class="kv">-0.034</div><div class="ks">獨立走勢</div></div>
-  <div class="kc cyan"><div class="kl">情境數</div><div class="kv">5</div><div class="ks">中經院季度報告</div></div>
+  <div class="kc c"><div class="kl">情境數</div><div class="kv">5</div><div class="ks">中經院季度報告</div></div>
 </div>
 
 <!-- Fan Chart -->
@@ -318,6 +312,9 @@
   <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#6366f1;display:inline-block"></span>Baseline</span>
   <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#f97316;display:inline-block"></span>差</span>
   <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#ef4444;display:inline-block"></span>極差</span>
+</div>
+<div style="background:#1C2333;border:1px solid rgba(245,158,11,0.25);border-left:3px solid var(--gold);border-radius:5px;padding:10px 14px;margin-top:10px;font-size:11px;color:#94A3B8;line-height:1.7;">
+  <strong style="color:#F59E0B">情境參數來源：</strong>五條路徑的成長斜率由中華經濟研究院季度報告提供，核心驅動變數包含 <strong style="color:#E2E8F0">GDP 成長率、CPI 通膨率、央行利率路徑、出口成長率</strong>。各情境組合不同的總經假設，再對應至台股歷史本益比區間，推估指數落點範圍——非統計外插，而是總經情境驅動的結構式推估。
 </div>
 </div></div>
 <div class="ins"><strong>Fan Chart：</strong>2024Q4 是分岔點，左邊是已知歷史，右邊是五個情境的可能路徑。極佳情境台股還能再漲約 38%，極差情境可能跌掉 36%。這個格式讓決策者直觀感受不確定性的範圍，而不只是看一條基準預測線。</div>
@@ -334,6 +331,11 @@
   </div>
   <div class="card"><div class="ct">2025 部位風險前瞻矩陣 <span class="badge">季度風險委員會輸出</span></div>
     <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed" id="riskTbl"></table></div>
+    <div style="background:#1C2333;border-radius:4px;padding:8px 12px;margin-top:8px;font-size:10px;color:#64748B;font-family:var(--mono);line-height:1.8">
+      <strong style="color:#94A3B8">數值說明：</strong>
+      極差 VaR = 極差情境下單日 95% 信賴區間最大損失估算（基於 2020–2024 歷史波動率）。
+      超限定義：預期損失超過部位限額 80%，或 VaR 超過風控委員會核定上限。
+    </div>
     <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;font-size:11px;color:var(--muted)">
       <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#dcfce7;border:0.5px solid #86efac;display:inline-block"></span>低風險</span>
       <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#fef9c3;border:0.5px solid #fde047;display:inline-block"></span>中風險</span>
@@ -346,8 +348,8 @@
 
 <div class="sh"><span class="sn">05</span><span class="st">未來進步方向</span><span class="sd">已知缺口·補強計畫·差異化優勢</span></div>
 <div class="rm">
-  <div class="rmc" style="border-top:2px solid var(--accent)"><div class="rmp">短期 · 0–3 個月</div><div class="rmt">深入市場微結構</div><ul><li>從日線深入 Tick 資料</li><li>TWSE 逐筆成交檔 pipeline</li><li>Order book 層級驗證</li><li>毫秒級前瞻偏差檢查</li></ul></div>
-  <div class="rmc" style="border-top:2px solid var(--gold)"><div class="rmp">中期 · 3–6 個月</div><div class="rmt">從批次升級為近即時</div><ul><li>事件驅動驗證架構</li><li>開盤前 SOP 自動化</li><li>延遲滑點量化建模</li><li>即時相關性監控</li></ul></div>
+  <div class="rmc" style="border-top:2px solid var(--accent)"><div class="rmp">短期 · 0–1 個月</div><div class="rmt">深入市場微結構</div><ul><li>從日線深入 Tick 資料</li><li>TWSE 逐筆成交檔 pipeline</li><li>Order book 層級驗證</li><li>毫秒級前瞻偏差檢查</li></ul></div>
+  <div class="rmc" style="border-top:2px solid var(--gold)"><div class="rmp">中期 · 1–3 個月</div><div class="rmt">從批次升級為近即時</div><ul><li>事件驅動驗證架構</li><li>開盤前 SOP 自動化</li><li>延遲滑點量化建模</li><li>即時相關性監控</li></ul></div>
   <div class="rmc" style="border-top:2px solid var(--green)"><div class="rmp">持續優勢</div><div class="rmt">風控視角的差異化</div><ul><li>資料錯誤在下游如何放大</li><li>前瞻偏差讓回測漂亮實盤崩潰</li><li>跨市場總經視角</li><li>除息未調整讓動量因子失效</li></ul></div>
 </div>
 
@@ -378,120 +380,6 @@ Plotly.newPlot('c1',['TWSE 官方爬蟲','Bloomberg Terminal','FRED 總經 API',
 (function(){
   const ev=D.events.map(e=>({type:'line',x0:e.date,x1:e.date,y0:0,y1:1,yref:'paper',line:{color:e.color,width:.8,dash:'dash'}}));
   Plotly.newPlot('c7',[{type:'scatter',mode:'lines',x:D.tw_dates,y:D.tw_norm,name:'台股加權（基期100）',line:{color:'#10B981',width:2}},{type:'scatter',mode:'lines',x:D.tw_dates,y:D.spx_norm,name:'美股 SPX（基期100）',line:{color:'#3B82F6',width:2}},{type:'scatter',mode:'lines',x:D.tw_dates,y:D.fed_monthly,name:'Fed 利率 %',line:{color:'#F59E0B',width:1.5,dash:'dot'},yaxis:'y2'}],L({shapes:ev,yaxis:{title:{text:'指數（基期100）',font:{size:9}}},yaxis2:{title:{text:'利率 %',font:{size:9,color:'#F59E0B'}},overlaying:'y',side:'right',tickfont:T.font,gridcolor:'rgba(0,0,0,0)',range:[-1,8]},margin:{t:8,b:32,l:52,r:52}}),cfg);
-})();
-
-// c8 相關性 — 星星自動對齊真實最高點
-(function(){
-  const n = D.corr_dates.length;
-  // 找真實最高值的位置
-  const maxVal = Math.max(...D.corr_vals);
-  const maxIdx = D.corr_vals.indexOf(maxVal);
-  const maxDate = D.corr_dates[maxIdx];
-  // 警戒線設為最高值的 85%（確保在圖內有意義）
-  const warnLine = parseFloat((maxVal * 0.85).toFixed(2));
-  const yMax = parseFloat((maxVal * 1.15).toFixed(2));
-  const yMin = Math.min(0, Math.min(...D.corr_vals) - 0.05);
-
-  Plotly.newPlot('c8',[
-    {type:'scatter',mode:'lines',x:D.corr_dates,y:D.corr_vals,
-      name:'60日滾動相關係數',line:{color:'#3B82F6',width:2},
-      fill:'tozeroy',fillcolor:'rgba(59,130,246,0.06)'},
-    {type:'scatter',mode:'lines',
-      x:[D.corr_dates[0],D.corr_dates[n-1]],y:[warnLine,warnLine],
-      line:{color:'#EF4444',width:1,dash:'dash'},
-      name:'警戒線 ' + warnLine.toFixed(2)},
-    {type:'scatter',mode:'markers+text',
-      x:[maxDate],y:[maxVal],
-      marker:{color:'#EF4444',size:12,symbol:'star'},
-      text:['歷史最高相關性'],
-      textposition:'top right',
-      textfont:{color:'#EF4444',size:9},
-      showlegend:false},
-  ], L({
-    yaxis:{range:[yMin, yMax], tickformat:'.2f',
-      title:{text:'相關係數',font:{size:9}}},
-  }), cfg);
-})();
-
-// c9 情境報酬分布 — 水平範圍圖（每情境一列，清楚顯示中位數與IQR）
-(function(){
-  const labels = D.scenario_labels.map(s => s.replace('（低波動）','').replace('（高波動）',''));
-  const cols   = D.scenario_colors;
-  const stats  = D.scenario_stats;
-
-  // 每個情境畫三層：極端範圍（lo~hi）、IQR（q1~q3）、中位數點
-  const traces = [];
-
-  // 層一：極端範圍（細線，低透明度）
-  stats.forEach((st, i) => {
-    traces.push({
-      type: 'scatter', mode: 'lines',
-      x: [st.lo, st.hi], y: [labels[i], labels[i]],
-      line: { color: cols[i], width: 2 },
-      opacity: 0.35,
-      showlegend: false,
-      hoverinfo: 'skip',
-    });
-  });
-
-  // 層二：IQR 範圍（粗線，主色）
-  stats.forEach((st, i) => {
-    traces.push({
-      type: 'scatter', mode: 'lines',
-      x: [st.q1, st.q3], y: [labels[i], labels[i]],
-      line: { color: cols[i], width: 14 },
-      opacity: 0.75,
-      showlegend: false,
-      name: labels[i],
-      hovertemplate: labels[i] + '<br>IQR: %{x:.1f}%<extra></extra>',
-    });
-  });
-
-  // 層三：中位數（白色菱形點）
-  traces.push({
-    type: 'scatter', mode: 'markers',
-    x: stats.map(st => st.median),
-    y: labels,
-    marker: { color: '#FFFFFF', size: 10, symbol: 'diamond', line: { color: '#1E2D45', width: 1.5 } },
-    showlegend: false,
-    hovertemplate: '中位數: %{x:.1f}%<extra></extra>',
-  });
-
-  // 零線
-  traces.push({
-    type: 'scatter', mode: 'lines',
-    x: [0, 0],
-    y: [labels[0], labels[labels.length - 1]],
-    line: { color: 'rgba(148,163,184,0.4)', width: 1, dash: 'dot' },
-    showlegend: false, hoverinfo: 'skip',
-  });
-
-  const allVals = stats.flatMap(st => [st.lo, st.hi]);
-  const pad = (Math.max(...allVals) - Math.min(...allVals)) * 0.1;
-
-  Plotly.newPlot('c9', traces, L({
-    xaxis: {
-      title: { text: '台股年化報酬率 %', font: { size: 9 } },
-      zeroline: false,
-      range: [Math.min(...allVals) - pad, Math.max(...allVals) + pad],
-    },
-    yaxis: {
-      autorange: 'reversed',
-      tickfont: { size: 10, color: '#94A3B8' },
-      gridcolor: 'rgba(0,0,0,0)',
-    },
-    margin: { t: 8, b: 40, l: 80, r: 40 },
-    showlegend: false,
-    annotations: stats.map((st, i) => ({
-      x: st.median, y: labels[i],
-      text: st.median.toFixed(1) + '%',
-      showarrow: false,
-      font: { size: 9, color: '#E2E8F0' },
-      xanchor: st.median >= 0 ? 'left' : 'right',
-      xshift: st.median >= 0 ? 8 : -8,
-      yshift: 0,
-    })),
-  }), cfg);
 })();
 
 // c10 Fan Chart
@@ -529,10 +417,10 @@ Plotly.newPlot('c1',['TWSE 官方爬蟲','Bloomberg Terminal','FRED 總經 API',
 (function(){
   const scenarios=['極佳','好','Baseline','差','極差'];
   const rows=[
-    {name:'台股權益部位',risk:['低','低','中','高','超限'],var5:'5.8%'},
-    {name:'外幣部位',    risk:['低','中','中','超限','超限'],var5:'7.2%'},
-    {name:'固定收益',   risk:['低','低','低','中','高'],var5:'3.1%'},
-    {name:'衍生性商品', risk:['中','中','高','高','超限'],var5:'9.4%'},
+    {name:'台股權益部位',risk:['低','低','中','高','超限'],var5:'5.8%',limit:'4.0%',note:'限額4.0%，極差情境VaR達5.8%，超限45%'},
+    {name:'外幣部位',    risk:['低','中','中','超限','超限'],var5:'7.2%',limit:'5.0%',note:'限額5.0%，差/極差情境均觸及超限'},
+    {name:'固定收益',   risk:['低','低','低','中','高'],var5:'3.1%',limit:'6.0%',note:'限額6.0%，所有情境均未超限'},
+    {name:'衍生性商品', risk:['中','中','高','高','超限'],var5:'9.4%',limit:'7.0%',note:'限額7.0%，極差情境VaR達9.4%，超限34%'},
   ];
   const smap={'低':'background:#dcfce7;color:#166534;border:0.5px solid #86efac','中':'background:#fef9c3;color:#854d0e;border:0.5px solid #fde047','高':'background:#fee2e2;color:#991b1b;border:0.5px solid #fca5a5','超限':'background:#fca5a5;color:#7f1d1d;border:0.5px solid #f87171;font-weight:600'};
   const lmap={'低':'低風險','中':'中風險','高':'高風險','超限':'超限 ⚠'};
@@ -541,13 +429,16 @@ Plotly.newPlot('c1',['TWSE 官方爬蟲','Bloomberg Terminal','FRED 總經 API',
   const bd='border-bottom:0.5px solid rgba(30,45,69,0.4)';
   let htr='<tr><th style="text-align:left;padding:7px 8px;color:#64748B;font-weight:400;font-size:11px;'+bd+'">部位</th>';
   scenarios.forEach((s,i)=>{htr+=`<th style="padding:7px 4px;text-align:center;color:${scols[i]};font-weight:500;font-size:11px;${bd}">${s}</th>`;});
-  htr+=`<th style="padding:7px 4px;text-align:center;color:#64748B;font-weight:400;font-size:11px;${bd}">極差 VaR</th></tr>`;
+  htr+=`<th style="padding:7px 4px;text-align:center;color:#64748B;font-weight:400;font-size:11px;${bd}">VaR上限</th>`;
+  htr+=`<th style="padding:7px 4px;text-align:center;color:#EF4444;font-weight:400;font-size:11px;${bd}">極差 VaR</th></tr>`;
   tbl.innerHTML='<thead>'+htr+'</thead>';
   const tbody=document.createElement('tbody');
   rows.forEach(row=>{
     const tr=document.createElement('tr');
+    tr.title=row.note;
     let html=`<td style="padding:5px 8px;font-size:11px;${bd}">${row.name}</td>`;
     row.risk.forEach(r=>{html+=`<td style="padding:3px 4px;${bd}"><div style="display:flex;align-items:center;justify-content:center;border-radius:3px;font-size:10px;height:28px;${smap[r]}">${lmap[r]}</div></td>`;});
+    html+=`<td style="padding:5px 4px;text-align:center;font-weight:500;color:#64748B;font-size:11px;${bd}">${row.limit}</td>`;
     html+=`<td style="padding:5px 4px;text-align:center;font-weight:500;color:#EF4444;font-size:11px;${bd}">${row.var5}</td>`;
     tr.innerHTML=html;
     tbody.appendChild(tr);
