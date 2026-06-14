@@ -118,18 +118,165 @@
 </div>
 <div class="ins"><strong>解讀原則：</strong>最難的不是找到異常，而是判斷「這個異常是資料錯誤，還是真實的市場行為」。本系統建立<strong>市場事件日曆</strong>，在任何過濾邏輯執行前先做事件對應，再決定保留、標記或修正。</div>
 
-<div class="sh"><span class="sn">03</span><span class="st">資料處理 — 三層驗證架構</span><span class="sd">結構→業務邏輯→跨時間一致性</span></div>
-<div class="g2">
-  <div class="card"><div class="ct">VIX × 台股月報酬 散佈圖 <span class="badge">真實資料</span></div><div id="c4" style="height:240px"></div></div>
-  <div class="card"><div class="ct">台股月報酬率分布 <span class="badge">真實資料</span></div><div id="c5" style="height:240px"></div></div>
-</div>
-<div class="gf"><div class="card"><div class="ct">每月高波動交易日數（VIX>25）× 月均VIX <span class="badge">真實資料</span></div><div id="c6" style="height:200px"></div></div></div>
-<div style="margin-top:10px"><div class="qg">
-  <div class="qi"><div class="qn">Schema 結構驗證</div><div class="qv">99.8%</div><div class="qb"><div class="qbi" style="width:99.8%"></div></div><div style="color:var(--muted);font-size:10px;font-family:var(--mono)">欄位型別·時間戳·非空</div></div>
-  <div class="qi"><div class="qn">業務邏輯驗證</div><div class="qv">97.3%</div><div class="qb"><div class="qbi" style="width:97.3%"></div></div><div style="color:var(--muted);font-size:10px;font-family:var(--mono)">漲跌停·OHLCV一致性</div></div>
-  <div class="qi"><div class="qn">跨時間一致性</div><div class="qv">98.6%</div><div class="qb"><div class="qbi" style="width:98.6%"></div></div><div style="color:var(--muted);font-size:10px;font-family:var(--mono)">除息調整·跨來源比對</div></div>
-  <div class="qi"><div class="qn">前瞻偏差攔截</div><div class="qv">100%</div><div class="qb"><div class="qbi" style="width:100%;background:var(--accent)"></div></div><div style="color:var(--muted);font-size:10px;font-family:var(--mono)">發布日曆·雙時間戳</div></div>
+<div class="sh"><span class="sn">03</span><span class="st">資料處理 — 獨到設計 × 三層驗證架構</span><span class="sd">精彩亮點 · 決策邏輯 · 品質數字</span></div>
+
+<!-- 四大亮點卡片 -->
+<div class="gf"><div class="card"><div class="ct">資料處理四大獨到設計 <span class="badge">核心競爭力</span></div>
+<svg width="100%" viewBox="0 0 680 380" role="img" style="display:block">
+<title>資料處理四大獨到設計</title>
+<desc>雙時間戳、先問脈絡、分類輸出、防連鎖誤判四個核心設計的視覺化摘要。</desc>
+<defs><marker id="arr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect x="20" y="6" width="640" height="26" rx="5" fill="#1B3A6B" stroke="#1B3A6B" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF" x="340" y="19" text-anchor="middle" dominant-baseline="central">資料處理 — 四大獨到設計</text>
+<!-- 亮點一 標題 -->
+<rect x="20" y="40" width="315" height="22" rx="5 5 0 0" fill="#F59E0B" stroke="#F59E0B" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="10" font-weight="bold" fill="#412402" x="177" y="51" text-anchor="middle" dominant-baseline="central">★  雙時間戳防前瞻偏差</text>
+<rect x="20" y="62" width="315" height="120" rx="0 0 6 6" fill="#1C2333" stroke="#2E4482" stroke-width="0.5"/>
+<rect x="30" y="70" width="90" height="18" rx="3" fill="#7f1d1d" stroke="#7f1d1d" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#fecaca" x="75" y="79" text-anchor="middle" dominant-baseline="central">一般做法（錯）</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="34" y="98" dominant-baseline="central">coverage_date 對齊</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="34" y="112" dominant-baseline="central">→ 模型偷看未來資料</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#EF4444" x="34" y="126" dominant-baseline="central">→ 回測漂亮，實盤崩潰</text>
+<rect x="160" y="70" width="120" height="18" rx="3" fill="#085041" stroke="#085041" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#9FE1CB" x="220" y="79" text-anchor="middle" dominant-baseline="central">本系統設計（正確）</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="164" y="98" dominant-baseline="central">release_date 強制查詢</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="164" y="112" dominant-baseline="central">→ 架構層保證</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#10B981" x="164" y="126" dominant-baseline="central">→ 攔截率 100%</text>
+<circle cx="50" cy="170" r="4" fill="#888780" stroke="#888780" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="8" fill="#64748B" x="50" y="160" text-anchor="middle">coverage</text>
+<line x1="54" y1="170" x2="218" y2="170" stroke="#378ADD" stroke-width="1" marker-end="url(#arr1)"/>
+<text font-family="Calibri,sans-serif" font-size="8" fill="#378ADD" x="135" y="164" text-anchor="middle">≈ 120 天 (GDP)</text>
+<circle cx="223" cy="170" r="5" fill="#BA7517" stroke="#BA7517" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="8" fill="#F59E0B" x="250" y="164" text-anchor="middle">release ★</text>
+<!-- 亮點二 標題 -->
+<rect x="345" y="40" width="315" height="22" rx="5 5 0 0" fill="#534AB7" stroke="#534AB7" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="10" font-weight="bold" fill="#EEEDFE" x="502" y="51" text-anchor="middle" dominant-baseline="central">★  先問脈絡，再做判斷</text>
+<rect x="345" y="62" width="315" height="120" rx="0 0 6 6" fill="#1C2333" stroke="#2E4482" stroke-width="0.5"/>
+<rect x="355" y="70" width="90" height="18" rx="3" fill="#7f1d1d" stroke="#7f1d1d" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#fecaca" x="400" y="79" text-anchor="middle" dominant-baseline="central">一般做法（錯）</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="359" y="98" dominant-baseline="central">統計異常 → 直接過濾</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="359" y="112" dominant-baseline="central">→ 不認識市場邏輯</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#EF4444" x="359" y="126" dominant-baseline="central">→ 關鍵資料被誤殺</text>
+<rect x="480" y="70" width="120" height="18" rx="3" fill="#085041" stroke="#085041" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#9FE1CB" x="540" y="79" text-anchor="middle" dominant-baseline="central">本系統設計（正確）</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="484" y="98" dominant-baseline="central">異常 → 查事件日曆</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="484" y="112" dominant-baseline="central">→ 判斷市場脈絡</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#10B981" x="484" y="126" dominant-baseline="central">→ 分類處理</text>
+<rect x="355" y="152" width="58" height="20" rx="3" fill="#BA7517" stroke="#BA7517" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#412402" x="384" y="162" text-anchor="middle" dominant-baseline="central">偵測異常</text>
+<line x1="413" y1="162" x2="428" y2="162" stroke="#64748B" stroke-width="1" marker-end="url(#arr1)"/>
+<rect x="428" y="152" width="56" height="20" rx="3" fill="#534AB7" stroke="#534AB7" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#EEEDFE" x="456" y="162" text-anchor="middle" dominant-baseline="central">查事件</text>
+<line x1="484" y1="162" x2="499" y2="162" stroke="#64748B" stroke-width="1" marker-end="url(#arr1)"/>
+<rect x="499" y="152" width="62" height="20" rx="3" fill="#085041" stroke="#085041" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#9FE1CB" x="530" y="162" text-anchor="middle" dominant-baseline="central">分類處理</text>
+<!-- 亮點三 標題 -->
+<rect x="20" y="198" width="315" height="22" rx="5 5 0 0" fill="#0F6E56" stroke="#0F6E56" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="10" font-weight="bold" fill="#E1F5EE" x="177" y="209" text-anchor="middle" dominant-baseline="central">★  輸出帶出身證明，非二元</text>
+<rect x="20" y="220" width="315" height="148" rx="0 0 6 6" fill="#1C2333" stroke="#2E4482" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#EF4444" x="30" y="236" dominant-baseline="central">一般系統：保留 或 刪除（二元）</text>
+<line x1="30" y1="244" x2="326" y2="244" stroke="#2E4482" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#10B981" x="30" y="258" dominant-baseline="central">本系統：五種輸出分類</text>
+<rect x="30" y="266" width="62" height="18" rx="3" fill="#085041" stroke="#085041" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#9FE1CB" x="61" y="275" text-anchor="middle" dominant-baseline="central">is_exdiv</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="100" y="275" dominant-baseline="central">除息標記</text>
+<rect x="30" y="290" width="62" height="18" rx="3" fill="#0C447C" stroke="#0C447C" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#B5D4F4" x="61" y="299" text-anchor="middle" dominant-baseline="central">hit_limit</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="100" y="299" dominant-baseline="central">漲跌停標記</text>
+<rect x="30" y="314" width="62" height="18" rx="3" fill="#3C3489" stroke="#3C3489" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#CECBF6" x="61" y="323" text-anchor="middle" dominant-baseline="central">msci_rebal</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="100" y="323" dominant-baseline="central">指數調整標記</text>
+<rect x="178" y="266" width="62" height="18" rx="3" fill="#633806" stroke="#633806" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#FAC775" x="209" y="275" text-anchor="middle" dominant-baseline="central">修正寫入</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="248" y="275" dominant-baseline="central">可自動修正</text>
+<rect x="178" y="290" width="62" height="18" rx="3" fill="#791F1F" stroke="#791F1F" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#F7C1C1" x="209" y="299" text-anchor="middle" dominant-baseline="central">隔離審查</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="248" y="299" dominant-baseline="central">需人工確認</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#10B981" x="30" y="352" dominant-baseline="central">→ 下游依標記選擇計算邏輯</text>
+<!-- 亮點四 標題 -->
+<rect x="345" y="198" width="315" height="22" rx="5 5 0 0" fill="#993C1D" stroke="#993C1D" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="10" font-weight="bold" fill="#FAECE7" x="502" y="209" text-anchor="middle" dominant-baseline="central">★  防止連鎖誤判</text>
+<rect x="345" y="220" width="315" height="148" rx="0 0 6 6" fill="#1C2333" stroke="#2E4482" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#94A3B8" x="355" y="236" dominant-baseline="central">MSCI 調整日爆量 → 若直接過濾：</text>
+<rect x="355" y="244" width="64" height="18" rx="3" fill="#7f1d1d" stroke="#7f1d1d" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#fecaca" x="387" y="253" text-anchor="middle" dominant-baseline="central">爆量過濾</text>
+<line x1="419" y1="253" x2="433" y2="253" stroke="#EF4444" stroke-width="1" marker-end="url(#arr1)"/>
+<rect x="433" y="244" width="60" height="18" rx="3" fill="#7f1d1d" stroke="#7f1d1d" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#fecaca" x="463" y="253" text-anchor="middle" dominant-baseline="central">均量偏低</text>
+<line x1="493" y1="253" x2="507" y2="253" stroke="#EF4444" stroke-width="1" marker-end="url(#arr1)"/>
+<rect x="507" y="244" width="60" height="18" rx="3" fill="#7f1d1d" stroke="#7f1d1d" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#fecaca" x="537" y="253" text-anchor="middle" dominant-baseline="central">策略誤判</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#10B981" x="355" y="282" dominant-baseline="central">本系統解法：</text>
+<rect x="355" y="290" width="76" height="18" rx="3" fill="#085041" stroke="#085041" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#9FE1CB" x="393" y="299" text-anchor="middle" dominant-baseline="central">保留＋標記</text>
+<line x1="431" y1="299" x2="445" y2="299" stroke="#10B981" stroke-width="1" marker-end="url(#arr1)"/>
+<rect x="445" y="290" width="90" height="18" rx="3" fill="#085041" stroke="#085041" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#9FE1CB" x="490" y="299" text-anchor="middle" dominant-baseline="central">排除均量計算</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#10B981" x="355" y="322" dominant-baseline="central">→ 計算基準不被拉偏</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#10B981" x="355" y="338" dominant-baseline="central">→ 連鎖誤判不發生</text>
+</svg>
 </div></div>
+
+<!-- 決策樹 -->
+<div class="gf"><div class="card"><div class="ct">異常資料處理決策樹 <span class="badge">判斷邏輯</span></div>
+<svg width="100%" viewBox="0 0 680 330" role="img" style="display:block">
+<title>異常資料處理決策樹</title>
+<desc>原始資料進入後，三層驗證偵測異常，查詢市場事件日曆判斷性質，最終分流為保留標記、修正寫入、隔離審查三條路徑。</desc>
+<defs><marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<!-- 原始資料 -->
+<rect x="250" y="10" width="180" height="30" rx="6" fill="#2E4482" stroke="#2E4482" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="10" font-weight="bold" fill="#CADCFC" x="340" y="25" text-anchor="middle" dominant-baseline="central">原始資料進入 Pipeline</text>
+<line x1="340" y1="40" x2="340" y2="62" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr2)"/>
+<!-- 三層驗證 -->
+<rect x="215" y="62" width="250" height="38" rx="6" fill="#0C447C" stroke="#0C447C" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="10" font-weight="bold" fill="#CADCFC" x="340" y="76" text-anchor="middle" dominant-baseline="central">三層驗證</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#85B7EB" x="340" y="91" text-anchor="middle" dominant-baseline="central">Schema · 業務邏輯 · 跨時間一致性</text>
+<line x1="340" y1="100" x2="340" y2="122" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr2)"/>
+<!-- 偵測到異常？ -->
+<rect x="205" y="122" width="270" height="38" rx="6" fill="#633806" stroke="#633806" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="10" font-weight="bold" fill="#FAC775" x="340" y="136" text-anchor="middle" dominant-baseline="central">偵測到異常？</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#EF9F27" x="340" y="151" text-anchor="middle" dominant-baseline="central">統計偏離 · 規則違反 · 時序矛盾</text>
+<!-- 無異常 → 寫入 -->
+<line x1="475" y1="141" x2="544" y2="141" stroke="#10B981" stroke-width="1.5" marker-end="url(#arr2)"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#10B981" x="509" y="134" text-anchor="middle">無異常</text>
+<rect x="544" y="122" width="72" height="38" rx="6" fill="#085041" stroke="#085041" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="10" font-weight="bold" fill="#9FE1CB" x="580" y="141" text-anchor="middle" dominant-baseline="central">寫入</text>
+<!-- 有異常 -->
+<line x1="340" y1="160" x2="340" y2="182" stroke="#EF4444" stroke-width="1.5" marker-end="url(#arr2)"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#EF4444" x="350" y="173" dominant-baseline="central">有異常</text>
+<!-- 查市場事件日曆 -->
+<rect x="190" y="182" width="300" height="38" rx="6" fill="#3C3489" stroke="#3C3489" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="10" font-weight="bold" fill="#EEEDFE" x="340" y="196" text-anchor="middle" dominant-baseline="central">查詢市場事件日曆</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#AFA9EC" x="340" y="211" text-anchor="middle" dominant-baseline="central">除息日 · 停牌日 · 指數調整日 · 結算日</text>
+<line x1="340" y1="220" x2="340" y2="242" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr2)"/>
+<!-- 有對應事件？ -->
+<rect x="190" y="242" width="300" height="38" rx="6" fill="#633806" stroke="#633806" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="10" font-weight="bold" fill="#FAC775" x="340" y="256" text-anchor="middle" dominant-baseline="central">有對應市場事件？</text>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#EF9F27" x="340" y="271" text-anchor="middle" dominant-baseline="central">異常幅度符合事件邏輯？</text>
+<!-- 是 → 保留標記 (左) -->
+<line x1="190" y1="261" x2="130" y2="261" stroke="#10B981" stroke-width="1.5"/>
+<line x1="130" y1="261" x2="130" y2="294" stroke="#10B981" stroke-width="1.5" marker-end="url(#arr2)"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#10B981" x="158" y="254" text-anchor="middle">是</text>
+<rect x="46" y="294" width="168" height="30" rx="6" fill="#085041" stroke="#085041" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="10" font-weight="bold" fill="#9FE1CB" x="130" y="309" text-anchor="middle" dominant-baseline="central">保留 · 標記出身</text>
+<!-- 否 → 往下 -->
+<line x1="340" y1="280" x2="340" y2="294" stroke="#EF4444" stroke-width="1.5" marker-end="url(#arr2)"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#EF4444" x="350" y="289" dominant-baseline="central">否</text>
+<!-- 可自動修正？ -->
+<rect x="226" y="294" width="228" height="30" rx="6" fill="#633806" stroke="#633806" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="10" font-weight="bold" fill="#FAC775" x="340" y="309" text-anchor="middle" dominant-baseline="central">可自動修正？</text>
+<!-- 是 → 修正 (右) -->
+<line x1="454" y1="309" x2="508" y2="309" stroke="#378ADD" stroke-width="1.5" marker-end="url(#arr2)"/>
+<text font-family="Calibri,sans-serif" font-size="9" fill="#378ADD" x="480" y="302" text-anchor="middle">是</text>
+<rect x="508" y="294" width="120" height="30" rx="6" fill="#0C447C" stroke="#0C447C" stroke-width="0.5"/>
+<text font-family="Calibri,sans-serif" font-size="10" font-weight="bold" fill="#B5D4F4" x="568" y="309" text-anchor="middle" dominant-baseline="central">修正 · 寫入</text>
+</svg>
+<div style="background:#1C2333;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:11px;color:#94A3B8;font-family:Calibri,sans-serif">
+<strong style="color:#E2E8F0">核心邏輯：</strong>不是過濾，是分類——每一筆資料帶著出身證明進入下游，讓策略系統知道這筆資料的脈絡，自己決定要怎麼用。
+</div>
+</div></div>
+
+
 
 <div class="sh"><span class="sn">04</span><span class="st">應用資料 — 跨市場情境分析</span><span class="sd">歷史回顧 · 2025 前瞻預測 · 部位風險矩陣</span></div>
 
@@ -226,21 +373,6 @@ Plotly.newPlot('c1',['TWSE 官方爬蟲','Bloomberg Terminal','FRED 總經 API',
   const anns=D.events.map(e=>({x:e.date,y:1.06,yref:'paper',text:e.label,showarrow:false,font:{size:9,color:e.color},xanchor:'left',textangle:-30}));
   Plotly.newPlot('c3',[{type:'scatter',mode:'lines',x:D.tw_all_dates,y:D.tw_all_vals,line:{color:'#3B82F6',width:1.5},fill:'tozeroy',fillcolor:'rgba(59,130,246,0.08)',name:'台股加權指數'}],L({shapes,annotations:anns,margin:{t:35,b:32,l:60,r:12},showlegend:false,yaxis:{title:{text:'點數',font:{size:9,color:'#64748B'}}}}),cfg);
 })();
-
-// c4 散佈圖
-(function(){
-  const tw_month_ret = D.tw_norm.map((v,i)=>i===0?0:parseFloat(((v/D.tw_norm[i-1]-1)*100).toFixed(2)));
-  Plotly.newPlot('c4',[{type:'scatter',mode:'markers',x:D.vix_vals,y:tw_month_ret,marker:{color:D.vix_vals.map(v=>v>30?'#EF4444':v>20?'#F59E0B':'#10B981'),size:7,opacity:.7},text:D.vix_dates,hovertemplate:'%{text}<br>VIX: %{x:.1f}<br>月報酬: %{y:.2f}%<extra></extra>',name:'月度觀測'},{type:'scatter',mode:'lines',x:[10,90],y:[0,0],line:{color:'#64748B',width:1,dash:'dash'},showlegend:false}],L({xaxis:{title:{text:'VIX',font:{size:9}}},yaxis:{title:{text:'台股月報酬 %',font:{size:9}}},showlegend:false}),cfg);
-})();
-
-// c5 直方圖
-(function(){
-  const mr=D.tw_norm.map((v,i)=>i===0?null:parseFloat(((v/D.tw_norm[i-1]-1)*100).toFixed(2))).filter(v=>v!==null);
-  Plotly.newPlot('c5',[{type:'histogram',x:mr,nbinsx:30,marker:{color:'rgba(59,130,246,0.7)',line:{color:'#1E2D45',width:.5}},name:'月報酬分布'}],L({xaxis:{title:{text:'月報酬率 %',font:{size:9}}},yaxis:{title:{text:'頻次',font:{size:9}}},bargap:.05}),cfg);
-})();
-
-// c6 品質監控
-Plotly.newPlot('c6',[{type:'bar',x:D.vix_dates,y:D.anomaly_vals,name:'VIX>25 交易日數',marker:{color:'rgba(239,68,68,0.7)'}},{type:'scatter',mode:'lines',x:D.vix_dates,y:D.vix_vals,name:'月均 VIX',line:{color:'#F59E0B',width:2},yaxis:'y2'}],L({yaxis:{title:{text:'天數',font:{size:9,color:'#EF4444'}}},yaxis2:{title:{text:'VIX',font:{size:9,color:'#F59E0B'}},overlaying:'y',side:'right',tickfont:T.font,gridcolor:'rgba(0,0,0,0)'},margin:{t:8,b:32,l:42,r:42}}),cfg);
 
 // c7 跨市場
 (function(){
