@@ -365,7 +365,7 @@ const L = (ex) => Object.assign({paper_bgcolor:T.paper,plot_bgcolor:T.plot,font:
 const cfg = {responsive:true,displayModeBar:false};
 
 // c1 Pipeline
-Plotly.newPlot('c1',['TWSE 官方爬蟲','yfinance','FRED 總經 API','中華經濟研究院'].map((s,i)=>({type:'scatter',mode:'lines',x:[2020,2025],y:[i,i],line:{width:14,color:['#10B981','#3B82F6','#F59E0B','#8B5CF6'][i]},name:s,opacity:.85})),L({yaxis:{tickvals:[0,1,2,3],ticktext:['TWSE 官方爬蟲','yfinance','FRED 總經 API','中華經濟研究院'],gridcolor:'rgba(0,0,0,0)',tickfont:{size:10,color:'#94A3B8'}},margin:{t:8,b:28,l:160,r:12},showlegend:false}),cfg);
+Plotly.newPlot('c1',['(季頻)','(月頻)','(日線)','(事件驅動)'].map((s,i)=>({type:'scatter',mode:'lines',x:[2020,2025],y:[i,i],line:{width:14,color:['#10B981','#3B82F6','#F59E0B','#8B5CF6'][i]},name:s,opacity:.85})),L({yaxis:{tickvals:[0,1,2,3],ticktext:['中華經濟研究院','FRED 總經 API','yfinance','TWSE 官方爬蟲'],gridcolor:'rgba(0,0,0,0)',tickfont:{size:10,color:'#94A3B8'}},margin:{t:8,b:28,l:160,r:12},showlegend:false}),cfg);
 
 // c2 雙時間戳
 (function(){
